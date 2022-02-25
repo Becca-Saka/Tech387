@@ -1,0 +1,14 @@
+{
+  "resourceName": "tech387storage",
+  "policyUUID": "433ceeaf",
+  "bucketName": "tech387storagebucket",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

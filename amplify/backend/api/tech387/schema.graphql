@@ -1,0 +1,12 @@
+type UserModel @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userName: String
+  email: String
+  firstName: String
+  lastName: String
+  address: String
+  socialProfileImage: String
+  userNameQuery: String
+  profileImageKey: String
+}
+ 

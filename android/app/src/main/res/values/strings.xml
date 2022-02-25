@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">tech387</string>
+    <string name="facebook_app_id">323905789693398</string>
+    <string name="fb_login_protocol_scheme">fb323905789693398</string>
+    <string name="facebook_client_token">364209cffdd64fb6154a56cb3ebb70d8</string>
+</resources>
