@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:tech387/ui/views/home_view.dart';
 import 'package:tech387/ui/shared/constants.dart';
 
@@ -52,9 +54,12 @@ class SignInView extends StatelessWidget {
                         onChanged: authProvider.updatePassword,
                         obsureText: authProvider.obsureText,
                         suffixIcon: IconButton(
-                          icon: Icon(authProvider.obsureText
-                              ? Icons.lock_open
-                              : Icons.lock, color: Colors.grey,),
+                          icon: Icon(
+                            authProvider.obsureText
+                                ? Icons.lock_open
+                                : Icons.lock,
+                            color: Colors.grey,
+                          ),
                           onPressed: authProvider.obsurePassword,
                         ),
                       ),

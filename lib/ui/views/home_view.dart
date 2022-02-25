@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:tech387/ui/views/edit_profile.dart';
 import 'package:tech387/ui/views/welcome_view.dart';
 import 'package:tech387/ui/shared/constants.dart';
@@ -23,14 +24,16 @@ class HomeView extends StatelessWidget {
             children: [
               Hero(
                 tag: 'edit',
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: user.socialProfileImage != null
-                            ? NetworkImage(user.socialProfileImage!)
-                            : const AssetImage('assets/images/logo.png')
-                                as ImageProvider,
-                        fit: BoxFit.cover,),
+                child: FancyShimmerImage(
+                  imageUrl: '${user.socialProfileImage}',
+                  boxFit: BoxFit.cover,
+                  height: height,
+                  width: width,
+                  errorWidget: Image.asset(
+                    'assets/images/logo.png',
+                    height: height,
+                    width: width,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -148,7 +151,6 @@ class HomeView extends StatelessWidget {
         ],
       ),
     );
-
   }
 
   Row _textIcon(String text, IconData icon) {

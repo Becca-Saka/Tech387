@@ -22,6 +22,24 @@
             "args": [
                 "--verbose"
             ]
+        },
+        {
+            "name": "tech387 (verb-profile mode)",
+            "request": "launch",          
+            "flutterMode": "profile",
+            "type": "dart",
+            "args": [
+                "--verbose"
+            ]
+        },
+        {
+            "name": "tech387 (verb-release mode)",
+            "request": "launch",          
+            "flutterMode": "release",
+            "type": "dart",
+            "args": [
+                "--verbose"
+            ]
         }
     ]
 }

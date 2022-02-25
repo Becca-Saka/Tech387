@@ -33,6 +33,7 @@ dependencies:
   amplify_flutter: ^0.4.0
   amplify_storage_s3: ^0.4.0
   cupertino_icons: ^1.0.2
+  fancy_shimmer_image: ^2.0.1+1
   flutter:
     sdk: flutter
   http: ^0.13.4

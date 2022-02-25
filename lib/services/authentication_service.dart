@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:tech387/services/amplify_service.dart';
 import 'package:tech387/ui/shared/constants.dart';
 import 'package:uuid/uuid_util.dart';
 
@@ -5,11 +7,11 @@ class AuthenticationService {
   final auth = Amplify.Auth;
   final dataStore = Amplify.DataStore;
 
-  ///Cheking if user is logged in and getting user data
+  ///Checks if user is logged in and gets their data
+  ///But if user is not logged in, it it clears the datastore so that user data is not shared  between sessions
   Future<UserModel?> getCurrentUser() async {
     try {
-      final AuthSession res = await auth.fetchAuthSession();
-      if (res.isSignedIn) {
+      if (AmplifyService.instance.isSignedIn) {
         final user = await getUserFromDatabase();
         if (user != null) {
           return user;
@@ -23,16 +25,16 @@ class AuthenticationService {
 
   Future<UserModel?> getUserFromDatabase() async {
     try {
-      final currentUser = await Amplify.Auth.getCurrentUser();
+      final currentUser = await auth.getCurrentUser();
       final user = await dataStore.query(UserModel.classType,
-          where: UserModel.ID.eq(currentUser.userId));
+          where: UserModel.EMAIL.eq(currentUser.username));
       if (user.isNotEmpty) {
         return user.first;
       }
+      return null;
     } on Exception {
       return null;
     }
-    return null;
   }
 
   ///Checking if username is already taken
@@ -40,11 +42,11 @@ class AuthenticationService {
     String userName,
   ) async {
     List<UserModel> user = await dataStore.query(UserModel.classType,
-        where: UserModel.USERNAMEQUERY.contains(userName.toLowerCase()));
+        where: UserModel.USERNAMEQUERY.eq(userName.toLowerCase()));
     return user.isNotEmpty;
   }
 
-  ///Generate a random user name for user using social logins
+  ///Generates a random user name for user using social logins
   String _generateUUID() {
     final id = const Uuid().v4(options: {
       'rng': UuidUtil.cryptoRNG,
@@ -98,8 +100,7 @@ class AuthenticationService {
       {String? familyName, String? givenName, String? picture}) async {
     final currentUser = await Amplify.Auth.getCurrentUser();
 
-    ///Removing spacing from user name
-    userName = userName.split(" ").join("");
+    userName = userName.split(" ").join(""); //Removing spacing from username
 
     final userNameExist = await checkUserName(userName);
     if (userNameExist) {

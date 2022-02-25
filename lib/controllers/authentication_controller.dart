@@ -72,14 +72,17 @@ class AuthenticationController extends ChangeNotifier {
     final result = await _authService.signInWithEmail(_email!, password!);
     if (result) {
       final userr = await _authService.getUserFromDatabase();
-      _user = userr!;
-      clearFields();
-      setLoadingState(false);
-      return true;
-    } else {
-      setLoadingState(false);
-      return false;
+      if (userr != null) {
+        _user = userr;
+        address = _user.address;
+        clearFields();
+        setLoadingState(false);
+        notifyListeners();
+        return true;
+      }
     }
+    setLoadingState(false);
+    return false;
   }
 
   setLoadingState(bool state) {
@@ -170,6 +173,7 @@ class AuthenticationController extends ChangeNotifier {
       userNameQuery: currentUser.userNameQuery,
       email: currentUser.email,
     );
+    await Future.delayed(const Duration(seconds: 2));
     await _authService.updateUserInDataBase(user);
     _user = user;
     setLoadingState(false);
